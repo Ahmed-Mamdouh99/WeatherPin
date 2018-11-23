@@ -1,0 +1,12 @@
+version: '2.1'
+services:
+  weatherpin:
+    build: .
+    depends_on:
+      redis-service:
+        condition: service_healthy
+    ports:
+      - 3000:8080
+
+  redis-service:
+    image: healthcheck/redis:alpine
