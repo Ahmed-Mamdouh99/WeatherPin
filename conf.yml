@@ -1,0 +1,16 @@
+#Web config
+webhost:
+webport:
+
+#Redis config
+redisport:
+redispasswd:
+redisdb:
+redishost:
+
+#Here config
+hereid:
+hereappcode:
+
+#OpenWeatherMap
+owmkey:
