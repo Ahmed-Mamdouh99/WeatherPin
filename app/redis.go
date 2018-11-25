@@ -12,7 +12,7 @@ import (
 )
 
 // Initializing a new client
-const client = redis.NewClient(&redis.Options{
+var client = redis.NewClient(&redis.Options{
   Addr: AppConfig.RedisHost+":"+AppConfig.RedisPort,
   Password: AppConfig.RedisPasswd,
   DB: AppConfig.RedisDB,

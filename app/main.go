@@ -29,7 +29,7 @@ type Config struct {
 }
 
 // Config form the config file
-const AppConfig = readConfig()
+var AppConfig = readConfig()
 
 // Reads the file config.yml
 func readConfig() Config {
