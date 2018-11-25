@@ -1,1 +1,6 @@
 conf.yml
+tests
+app/vendor/*
+!app/vendor/vendor.json
+*test*
+*.old

@@ -13,40 +13,36 @@ import (
 
 type Config struct {
 	// WeatherPin
-	WebHost string
-	WebPort string
+	WebHost 			string
+	WebPort 			string
 	// Redis
-	RedisPort   string
-	RedisPasswd string
-	RedisDB     int
-	RedisHost   string
+	RedisPort   	string
+	RedisPasswd 	string
+	RedisDB     	int
+	RedisHost   	string
+	RedisTimeout	int
 	// Here maps
-	HereID      string
-	HereAppCode string
+	HereID      	string
+	HereAppCode 	string
 	// OWM OpenWeatherMap
-	OWMKey string
+	OWMKey 				string
 }
 
 // Config form the config file
-var AppConfig = readConfig()
+const AppConfig = readConfig()
 
 // Reads the file config.yml
 func readConfig() Config {
-	//Defining output variable
+	// Defining output variable
 	var config Config
-	//Working directory
-	/*var pwd, err = os.Getwd()
-	if err != nil{
-		Bail(err)
-	}*/
-	url := "/static/conf.yml"
 	// Load the file
+	url := "/static/conf.yml"
 	yamlFile, err := ioutil.ReadFile(url)
 	if err != nil {
 		Bail(err)
 	}
 	// parse yaml file
-	yaml.Unmarshal(yamlFile, &config)
+	err = yaml.Unmarshal(yamlFile, &config)
 	if err != nil {
 		Bail(err)
 	}
@@ -55,20 +51,30 @@ func readConfig() Config {
 
 func Bail(err error){
 	log.Printf("Error: %v.", err)
-	log.Fatal("Bailing! You're on your own now :(")
+	log.Println("Bailing! You're on your own now :(")
+	cleanUp()
 }
 
 func cleanUp(){
-	//VV TODO - Clean up goes here VV
+	// VV TODO - Clean up goes here VV
+	// Flushing cache before exiting
+	FlushCache()
+
+	// Pretty messages
 	fmt.Println("Exiting Weather Pin.")
+	fmt.Println("Goodbye!")
+	// System exit
+	os.Exit(0)
 }
 
 func main() {
+	//Flsuh Redis cache
+	FlushCache()
 	// Listening on the web port
 	defer http.ListenAndServe(":"+AppConfig.WebPort, nil)
 	// Making sure the config file was read
 	if AppConfig.WebPort == ""{
-		log.Fatal("Weatherpin-Main: Failed to start the app.")
+		log.Fatal("Weatherpin-Main: Invalid config file. Failed to start the app.")
 	}
 	// Graceful exit
 	var gracefulStop = make(chan os.Signal)
@@ -76,10 +82,8 @@ func main() {
 	signal.Notify(gracefulStop, syscall.SIGINT)
 	go func(){
 		sig := <-gracefulStop
-		fmt.Printf("\nCaught sig: %+v.\n", sig)
+		log.Printf("\nCaught sig: %+v.\n", sig)
 		cleanUp()
-		fmt.Println("Goodbye!")
-		os.Exit(0)
 	}()
 	// Handling the calls to the index
 	http.HandleFunc("/", IndexHandler)
