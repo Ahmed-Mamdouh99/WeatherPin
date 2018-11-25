@@ -52,7 +52,6 @@ func readConfig() Config {
 func Bail(err error){
 	log.Printf("Error: %v.", err)
 	log.Println("Bailing! You're on your own now :(")
-	cleanUp()
 }
 
 func cleanUp(){
