@@ -6,8 +6,19 @@
 
     <!--Base map-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
+    type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
+    type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" 
+     type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js" 
+     type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" 
+      type="text/javascript" charset="utf-8"></script>
+    <script src = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" 
+      href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
   </head>
 <body>
   <div style="width: 640px; height: 480px" id="mapContainer"></div>
@@ -28,6 +39,24 @@
         center: { lng: 13.4, lat: 52.51 }
       });
       /*TODO - Add map events and georeversing*/
+
+      var ui = H.ui.UI.createDefault(map, defaultLayers);
+        var mapEvents = new H.mapevents.MapEvents(map);
+
+        map.addEventListener('tap', function(evt) {
+            var coord = map.screenToGeo(evt.currentPointer.viewportX,
+                evt.currentPointer.viewportY);
+            $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + parseInt(coord.lat) + "&lon=" + parseInt(coord.lng) + "&APPID=637aa79319844d254e33bad285e23e82",function(json){
+
+                ui.addBubble(new H.ui.InfoBubble({
+                    lat: coord.lat,
+                    lng: coord.lng
+                }, { content: json.name + " " + json.weather[0].main }));
+
+            }); 
+        });
+ 
+        var behavior = new H.mapevents.Behavior(mapEvents);
 </script>
 <!--TODO - TBD-->
 </body>
