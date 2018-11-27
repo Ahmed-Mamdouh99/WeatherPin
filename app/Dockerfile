@@ -24,7 +24,7 @@ FROM alpine
 
 # Copy built executable from base image to here
 COPY --from=builder /go/src/app/weatherpin /
-COPY --from=builder /go/src/app/conf.yml /
+COPY --from=builder /go/src/app/static /static
 
 # Run the app
 CMD ["/weatherpin"]

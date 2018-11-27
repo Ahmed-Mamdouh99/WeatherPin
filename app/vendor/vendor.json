@@ -3,52 +3,52 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "1NH6qwTWEI0wCtZtMpQ7PLih8ts=",
+			"checksumSHA1": "Plp0d9M3ahV+SAL8HoaPtk11oRA=",
 			"path": "github.com/go-redis/redis",
-			"revision": "78a66f0e5fd787d5d0ba6ef4cc442895288229ad",
-			"revisionTime": "2018-11-21T10:26:15Z"
+			"revision": "8238d9a02746abd1b244895f69a0db1c6f86c9b0",
+			"revisionTime": "2018-11-24T11:32:57Z"
 		},
 		{
 			"checksumSHA1": "z12gGj6VbVBcPOvof1aCM+DVGRU=",
 			"path": "github.com/go-redis/redis/internal",
-			"revision": "78a66f0e5fd787d5d0ba6ef4cc442895288229ad",
-			"revisionTime": "2018-11-21T10:26:15Z"
+			"revision": "8238d9a02746abd1b244895f69a0db1c6f86c9b0",
+			"revisionTime": "2018-11-24T11:32:57Z"
 		},
 		{
 			"checksumSHA1": "GQZsUVg/+6UpQAYpc4luMvMutSI=",
 			"path": "github.com/go-redis/redis/internal/consistenthash",
-			"revision": "78a66f0e5fd787d5d0ba6ef4cc442895288229ad",
-			"revisionTime": "2018-11-21T10:26:15Z"
+			"revision": "8238d9a02746abd1b244895f69a0db1c6f86c9b0",
+			"revisionTime": "2018-11-24T11:32:57Z"
 		},
 		{
 			"checksumSHA1": "l66eTZiJqueypc56HXCakGDm784=",
 			"path": "github.com/go-redis/redis/internal/hashtag",
-			"revision": "78a66f0e5fd787d5d0ba6ef4cc442895288229ad",
-			"revisionTime": "2018-11-21T10:26:15Z"
+			"revision": "8238d9a02746abd1b244895f69a0db1c6f86c9b0",
+			"revisionTime": "2018-11-24T11:32:57Z"
 		},
 		{
 			"checksumSHA1": "WoUjtqpn00RUnAgZLljk3lWfpSQ=",
 			"path": "github.com/go-redis/redis/internal/pool",
-			"revision": "78a66f0e5fd787d5d0ba6ef4cc442895288229ad",
-			"revisionTime": "2018-11-21T10:26:15Z"
+			"revision": "8238d9a02746abd1b244895f69a0db1c6f86c9b0",
+			"revisionTime": "2018-11-24T11:32:57Z"
 		},
 		{
 			"checksumSHA1": "zCo0t+gRBbctwyIpkDLrqRFtXew=",
 			"path": "github.com/go-redis/redis/internal/proto",
-			"revision": "78a66f0e5fd787d5d0ba6ef4cc442895288229ad",
-			"revisionTime": "2018-11-21T10:26:15Z"
+			"revision": "8238d9a02746abd1b244895f69a0db1c6f86c9b0",
+			"revisionTime": "2018-11-24T11:32:57Z"
 		},
 		{
 			"checksumSHA1": "sjbjSJrTdvyDwNjrWjTNeXgUhaU=",
 			"path": "github.com/go-redis/redis/internal/singleflight",
-			"revision": "78a66f0e5fd787d5d0ba6ef4cc442895288229ad",
-			"revisionTime": "2018-11-21T10:26:15Z"
+			"revision": "8238d9a02746abd1b244895f69a0db1c6f86c9b0",
+			"revisionTime": "2018-11-24T11:32:57Z"
 		},
 		{
 			"checksumSHA1": "1PH2NoAB/u3IZmLYyCrIbOzqLZ4=",
 			"path": "github.com/go-redis/redis/internal/util",
-			"revision": "78a66f0e5fd787d5d0ba6ef4cc442895288229ad",
-			"revisionTime": "2018-11-21T10:26:15Z"
+			"revision": "8238d9a02746abd1b244895f69a0db1c6f86c9b0",
+			"revisionTime": "2018-11-24T11:32:57Z"
 		},
 		{
 			"checksumSHA1": "ZSWoOPUNRr5+3dhkLK3C4cZAQPk=",
@@ -57,5 +57,5 @@
 			"revisionTime": "2018-03-28T19:50:20Z"
 		}
 	],
-	"rootPath": "weatherpin"
+	"rootPath": "weatherpin/app"
 }
