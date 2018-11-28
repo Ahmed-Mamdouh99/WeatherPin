@@ -39,20 +39,60 @@
         center: { lng: 13.4, lat: 52.51 }
       });
       /*TODO - Add map events and georeversing*/
-
       var ui = H.ui.UI.createDefault(map, defaultLayers);
         var mapEvents = new H.mapevents.MapEvents(map);
-
         map.addEventListener('tap', function(evt) {
             var coord = map.screenToGeo(evt.currentPointer.viewportX,
                 evt.currentPointer.viewportY);
             $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + parseInt(coord.lat) + "&lon=" + parseInt(coord.lng) + "&APPID=637aa79319844d254e33bad285e23e82",function(json){
-
-                ui.addBubble(new H.ui.InfoBubble({
-                    lat: coord.lat,
-                    lng: coord.lng
-                }, { content: json.name + " " + json.weather[0].main }));
-
+                // ui.addBubble(new H.ui.InfoBubble({
+                //     lat: "1.1",
+                //     lng: coord.lng
+                // }, { content: json.name + " " + json.weather[0].main }));
+                var reverseGeocodingParameters = {
+                  prox: coord.lat.toFixed(4) + ',' + coord.lng.toFixed(4) + ',150',
+                  mode: 'retrieveAddresses',
+                  maxresults: 1
+                };
+                // Define a callback function to process the response:
+                function onSuccess(result) {
+                  var location = result.Response.View[0].Result[0];
+                  // Create an InfoBubble at the returned location with
+                  // the address as its contents:
+                  // ui.addBubble(new H.ui.InfoBubble({
+                  //   lat: location.Location.DisplayPosition.Latitude,
+                  //   lng: location.Location.DisplayPosition.Longitude
+                  // }, { content: location.Location.Address.Label }));
+                  // var form = document.createElement("form");
+                  // form.setAttribute("method", "post");
+                  // form.setAttribute("action", "/");
+                  // var hiddenField = document.createElement("input");
+                  // hiddenField.setAttribute("type", "hidden");
+                  // hiddenField.setAttribute("name", "lat");
+                  // hiddenField.setAttribute("value", location.Location.DisplayPosition.Latitude);
+                  // form.appendChild(hiddenField);
+                  // var hiddenField = document.createElement("input");
+                  // hiddenField.setAttribute("type", "hidden");
+                  // hiddenField.setAttribute("name", "lon");
+                  // hiddenField.setAttribute("value", location.Location.DisplayPosition.Longitude);
+                  // form.appendChild(hiddenField);
+                  // document.body.appendChild(form);
+                  // form.submit();
+                  $.post('/', {
+                    lan : location.Location.DisplayPosition.Latitude,
+                    lon : location.Location.DisplayPosition.Longitude
+                  });
+                  console.log("submitted");
+                };
+                // Get an instance of the geocoding service:
+                var geocoder = platform.getGeocodingService();
+                // Call the geocode method with the geocoding parameters,
+                // the callback and an error callback function (called if a
+                // communication error occurs):
+                geocoder.reverseGeocode(
+                  reverseGeocodingParameters,
+                  onSuccess,
+                  function(e) { alert(e); });
             }); 
         });
  
