@@ -79,9 +79,13 @@
                   // document.body.appendChild(form);
                   // form.submit();
                   $.post('/', {
-                    lan : location.Location.DisplayPosition.Latitude,
-                    lon : location.Location.DisplayPosition.Longitude
-                  });
+                    lan : Math.round(location.Location.DisplayPosition.Latitude),
+                    lon : Math.round(location.Location.DisplayPosition.Longitude)
+                  }, function(data) {
+                    console.log(data);
+                  },
+                  "json"
+                  );
                   console.log("submitted");
                 };
                 // Get an instance of the geocoding service:
