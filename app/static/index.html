@@ -44,7 +44,7 @@
         map.addEventListener('tap', function(evt) {
             var coord = map.screenToGeo(evt.currentPointer.viewportX,
                 evt.currentPointer.viewportY);
-            $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + parseInt(coord.lat) + "&lon=" + parseInt(coord.lng) + "&APPID=637aa79319844d254e33bad285e23e82",function(json){
+            // $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + parseInt(coord.lat) + "&lon=" + parseInt(coord.lng) + "&APPID=637aa79319844d254e33bad285e23e82",function(json){
                 // ui.addBubble(new H.ui.InfoBubble({
                 //     lat: "1.1",
                 //     lng: coord.lng
@@ -83,10 +83,14 @@
                     lon : Math.round(location.Location.DisplayPosition.Longitude)
                   }, function(data) {
                     console.log(data);
+                    ui.addBubble(new H.ui.InfoBubble({
+                    lat: location.Location.DisplayPosition.Latitude,
+                    lng: location.Location.DisplayPosition.Longitude
+                    }, { content: data.main.temp + '' }));
                   },
                   "json"
                   );
-                  console.log("submitted");
+                  // console.log("submitted");
                 };
                 // Get an instance of the geocoding service:
                 var geocoder = platform.getGeocodingService();
@@ -98,7 +102,7 @@
                   onSuccess,
                   function(e) { alert(e); });
             }); 
-        });
+        // });
  
         var behavior = new H.mapevents.Behavior(mapEvents);
 </script>
