@@ -21,6 +21,8 @@
       href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
   </head>
 <body>
+  <input type="text" id="city">
+  <button onclick="searchCity()">Search!</button>
   <div style="width: 640px; height: 480px" id="mapContainer"></div>
   <script>
   //Initialize the Platform object:
@@ -37,7 +39,9 @@
       {
         zoom: 10,
         center: { lng: 13.4, lat: 52.51 }
-      });
+    });
+      // Get an instance of the geocoding service:
+      var geocoder = platform.getGeocodingService();
       /*TODO - Add map events and georeversing*/
       var ui = H.ui.UI.createDefault(map, defaultLayers);
         var mapEvents = new H.mapevents.MapEvents(map);
@@ -92,8 +96,6 @@
                   );
                   // console.log("submitted");
                 };
-                // Get an instance of the geocoding service:
-                var geocoder = platform.getGeocodingService();
                 // Call the geocode method with the geocoding parameters,
                 // the callback and an error callback function (called if a
                 // communication error occurs):
@@ -103,6 +105,44 @@
                   function(e) { alert(e); });
             }); 
         // });
+
+      function searchCity() {
+        console.log(document.getElementById("city").value);
+        // Create the parameters for the geocoding request:
+        var geocodingParams = {
+          searchText: document.getElementById("city").value
+        };
+
+        // Define a callback function to process the geocoding response:
+        var onResult = function(result) {
+          var locations = result.Response.View[0].Result;
+          $.post('/', {
+              lan : Math.round(locations[0].Location.DisplayPosition.Latitude),
+              lon : Math.round(locations[0].Location.DisplayPosition.Longitude)
+            }, function(data) {
+              console.log(data);
+              ui.addBubble(new H.ui.InfoBubble({
+              lat: locations[0].Location.DisplayPosition.Latitude,
+              lng: locations[0].Location.DisplayPosition.Longitude
+              }, { content: data.main.temp + '' }));
+            },
+            "json"
+          );
+          map.setCenter({
+            lat:locations[0].Location.DisplayPosition.Latitude, 
+            lng:locations[0].Location.DisplayPosition.Longitude
+          });
+          map.setZoom(10);
+          
+        };
+
+        // Call the geocode method with the geocoding parameters,
+        // the callback and an error callback function (called if a
+        // communication error occurs):
+        geocoder.geocode(geocodingParams, onResult, function(e) {
+          alert(e);
+        });
+      }
  
         var behavior = new H.mapevents.Behavior(mapEvents);
 </script>
