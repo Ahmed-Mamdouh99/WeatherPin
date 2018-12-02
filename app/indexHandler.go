@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"html/template"
-	"io/ioutil"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -22,22 +20,24 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		lan, _ := strconv.Atoi(r.FormValue("lan"))
 		lon, _ := strconv.Atoi(r.FormValue("lon"))
 		fmt.Println("Receive ajax post data string ", lan, " ", lon)
-		url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?lat=%d&lon=%d&APPID=637aa79319844d254e33bad285e23e82", lan, lon)
+		// url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?lat=%d&lon=%d&APPID=637aa79319844d254e33bad285e23e82&units=metric", lan, lon)
 
-		res, err := http.Get(url)
-		if err != nil {
-			Bail(err)
-		}
+		// res, err := http.Get(url)
+		// if err != nil {
+		// 	Bail(err)
+		// }
 
-		body, readErr := ioutil.ReadAll(res.Body)
-		if readErr != nil {
-			log.Fatal(readErr)
-		}
-		fmt.Println(body)
+		// body, readErr := ioutil.ReadAll(res.Body)
+		// if readErr != nil {
+		// 	log.Fatal(readErr)
+		// }
+		// fmt.Println(body)
 
-		w.Header().Set("Content-Type", res.Header.Get("Content-Type"))
-		w.Write(body)
-		res.Body.Close()
+		data, _ := GetJson(lan, lon)
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(data))
+		// res.Body.Close()
 	}
 	if r.Method == "GET" {
 		//TBD
