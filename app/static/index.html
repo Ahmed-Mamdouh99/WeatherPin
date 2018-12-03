@@ -99,10 +99,15 @@
                     lon : Math.round(location.Location.DisplayPosition.Longitude)
                   }, function(data) {
                     console.log(data);
+                    var content = location.Location.Address.Label + ".<br>" 
+                            + data.weather[0].main + ".<br>"
+                            + "<b>current temp:</b> " + data.main.temp + ".<br>"
+                            + "<b> max temp:</b> " + data.main.temp_max + ".<br>"
+                            + "<b> min temp:</b> " + data.main.temp_min + ".<br>";
                     ui.addBubble(new H.ui.InfoBubble({
                     lat: location.Location.DisplayPosition.Latitude,
                     lng: location.Location.DisplayPosition.Longitude
-                    }, { content: data.main.temp + '' }));
+                    }, { content: content }));
                   },
                   "json"
                   );
@@ -133,10 +138,15 @@
               lon : Math.round(locations[0].Location.DisplayPosition.Longitude)
             }, function(data) {
               console.log(data);
+              var content = locations[0].Location.Address.Label + ".<br>" 
+                            + data.weather[0].main + ".<br>"
+                            + "<b>current temp:</b> " + data.main.temp + ".<br>"
+                            + "<b> max temp:</b> " + data.main.temp_max + ".<br>"
+                            + "<b> min temp:</b> " + data.main.temp_min + ".<br>";
               ui.addBubble(new H.ui.InfoBubble({
               lat: locations[0].Location.DisplayPosition.Latitude,
               lng: locations[0].Location.DisplayPosition.Longitude
-              }, { content: data.main.temp + '' }));
+              }, { content: content }));
             },
             "json"
           );
