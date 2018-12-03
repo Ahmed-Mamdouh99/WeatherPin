@@ -19,13 +19,13 @@
     <script src = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
     <link rel="stylesheet" type="text/css" 
       href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
-      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-      <style>
-      body {
-        background-color: azure; 
-      }
-      </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+    body {
+      background-color: azure; 
+    }
+    </style>
   </head>
 <body class="d-flex flex-column align-items-center">
   <h1 class="my-4">
@@ -54,74 +54,46 @@
     });
       // Get an instance of the geocoding service:
       var geocoder = platform.getGeocodingService();
-      /*TODO - Add map events and georeversing*/
       var ui = H.ui.UI.createDefault(map, defaultLayers);
         var mapEvents = new H.mapevents.MapEvents(map);
         map.addEventListener('tap', function(evt) {
             var coord = map.screenToGeo(evt.currentPointer.viewportX,
                 evt.currentPointer.viewportY);
-            // $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + parseInt(coord.lat) + "&lon=" + parseInt(coord.lng) + "&APPID=637aa79319844d254e33bad285e23e82",function(json){
-                // ui.addBubble(new H.ui.InfoBubble({
-                //     lat: "1.1",
-                //     lng: coord.lng
-                // }, { content: json.name + " " + json.weather[0].main }));
-                var reverseGeocodingParameters = {
-                  prox: coord.lat.toFixed(4) + ',' + coord.lng.toFixed(4) + ',150',
-                  mode: 'retrieveAddresses',
-                  maxresults: 1
-                };
-                // Define a callback function to process the response:
-                function onSuccess(result) {
-                  var location = result.Response.View[0].Result[0];
-                  // Create an InfoBubble at the returned location with
-                  // the address as its contents:
-                  // ui.addBubble(new H.ui.InfoBubble({
-                  //   lat: location.Location.DisplayPosition.Latitude,
-                  //   lng: location.Location.DisplayPosition.Longitude
-                  // }, { content: location.Location.Address.Label }));
-                  // var form = document.createElement("form");
-                  // form.setAttribute("method", "post");
-                  // form.setAttribute("action", "/");
-                  // var hiddenField = document.createElement("input");
-                  // hiddenField.setAttribute("type", "hidden");
-                  // hiddenField.setAttribute("name", "lat");
-                  // hiddenField.setAttribute("value", location.Location.DisplayPosition.Latitude);
-                  // form.appendChild(hiddenField);
-                  // var hiddenField = document.createElement("input");
-                  // hiddenField.setAttribute("type", "hidden");
-                  // hiddenField.setAttribute("name", "lon");
-                  // hiddenField.setAttribute("value", location.Location.DisplayPosition.Longitude);
-                  // form.appendChild(hiddenField);
-                  // document.body.appendChild(form);
-                  // form.submit();
-                  $.post('/', {
-                    lan : Math.round(location.Location.DisplayPosition.Latitude),
-                    lon : Math.round(location.Location.DisplayPosition.Longitude)
-                  }, function(data) {
-                    console.log(data);
-                    var content = location.Location.Address.Label + ".<br>" 
-                            + data.weather[0].main + ".<br>"
-                            + "<b>current temp:</b> " + data.main.temp + ".<br>"
-                            + "<b> max temp:</b> " + data.main.temp_max + ".<br>"
-                            + "<b> min temp:</b> " + data.main.temp_min + ".<br>";
-                    ui.addBubble(new H.ui.InfoBubble({
-                    lat: location.Location.DisplayPosition.Latitude,
-                    lng: location.Location.DisplayPosition.Longitude
-                    }, { content: content }));
-                  },
-                  "json"
-                  );
-                  // console.log("submitted");
-                };
-                // Call the geocode method with the geocoding parameters,
-                // the callback and an error callback function (called if a
-                // communication error occurs):
-                geocoder.reverseGeocode(
-                  reverseGeocodingParameters,
-                  onSuccess,
-                  function(e) { alert(e); });
-            }); 
-        // });
+            var reverseGeocodingParameters = {
+              prox: coord.lat.toFixed(4) + ',' + coord.lng.toFixed(4) + ',150',
+              mode: 'retrieveAddresses',
+              maxresults: 1
+            };
+            // Define a callback function to process the response:
+            function onSuccess(result) {
+              var location = result.Response.View[0].Result[0];
+              $.post('/', {
+                lan : Math.round(location.Location.DisplayPosition.Latitude),
+                lon : Math.round(location.Location.DisplayPosition.Longitude)
+              }, function(data) {
+                var content = location.Location.Address.Label + ".<br>" 
+                        + data.weather[0].main + ".<br>"
+                        + "<b>current temp:</b> " + data.main.temp + ".<br>"
+                        + "<b> max temp:</b> " + data.main.temp_max + ".<br>"
+                        + "<b> min temp:</b> " + data.main.temp_min + ".<br>";
+                // Create an InfoBubble at the returned location with
+                // the address as its contents:
+                ui.addBubble(new H.ui.InfoBubble({
+                lat: location.Location.DisplayPosition.Latitude,
+                lng: location.Location.DisplayPosition.Longitude
+                }, { content: content }));
+              },
+              "json"
+              );
+            };
+            // Call the geocode method with the geocoding parameters,
+            // the callback and an error callback function (called if a
+            // communication error occurs):
+            geocoder.reverseGeocode(
+              reverseGeocodingParameters,
+              onSuccess,
+              function(e) { alert(e); });
+        }); 
 
       function searchCity() {
         console.log(document.getElementById("city").value);
@@ -143,6 +115,8 @@
                             + "<b>current temp:</b> " + data.main.temp + ".<br>"
                             + "<b> max temp:</b> " + data.main.temp_max + ".<br>"
                             + "<b> min temp:</b> " + data.main.temp_min + ".<br>";
+              // Create an InfoBubble at the returned location with
+              // the address as its contents:
               ui.addBubble(new H.ui.InfoBubble({
               lat: locations[0].Location.DisplayPosition.Latitude,
               lng: locations[0].Location.DisplayPosition.Longitude

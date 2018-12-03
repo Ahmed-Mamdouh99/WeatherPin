@@ -41,15 +41,15 @@ func GetJson(lan int, lon int) (string, error) {
 		// Add the data to the cache
 		client.Set(key, val, time.Duration(AppConfig.RedisTimeout)*time.Hour)
 		// Return result
-		//fmt.println("hello from cache")
 		return val, err
 	}
+	fmt.Println("hello from cache")
 	// The data was either cached or an error occured
 	return val, err
 }
 
 func getFromOwm(lan int, lon int) (string, error) {
-	// TODO - Get the json data from OpenWeatherMap using the API key in AppConfig
+	// Get the json data from OpenWeatherMap using the API key in AppConfig
 	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?lat=%d&lon=%d&APPID=%s&units=metric", lan, lon, AppConfig.OWMKey)
 	res, err := http.Get(url)
 	if err != nil {
