@@ -43,7 +43,6 @@ func GetJson(lan int, lon int) (string, error) {
 		// Return result
 		return val, err
 	}
-	fmt.Println("hello from cache")
 	// The data was either cached or an error occured
 	return val, err
 }
