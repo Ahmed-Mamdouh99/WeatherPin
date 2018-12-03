@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <title>Weather Pin</title>
 
-    <!--Base map-->
+       <!--Base map-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
+    <!-- Map setup -->
+      <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
     type="text/javascript" charset="utf-8"></script>
     <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
     type="text/javascript" charset="utf-8"></script>
@@ -19,7 +20,8 @@
     <script src = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
     <link rel="stylesheet" type="text/css" 
       href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+    <!-- import bootstrap css-->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <style>
     body {
@@ -66,11 +68,13 @@
             };
             // Define a callback function to process the response:
             function onSuccess(result) {
+                //send lon and lat to backend
               var location = result.Response.View[0].Result[0];
               $.post('/', {
                 lan : Math.round(location.Location.DisplayPosition.Latitude),
                 lon : Math.round(location.Location.DisplayPosition.Longitude)
               }, function(data) {
+                  //display info data as info bubble
                 var content = location.Location.Address.Label + ".<br>" 
                         + data.weather[0].main + ".<br>"
                         + "<b>current temp:</b> " + data.main.temp + ".<br>"
@@ -109,11 +113,12 @@
         // Define a callback function to process the geocoding response:
         var onResult = function(result) {
           var locations = result.Response.View[0].Result;
+            //send the lat and lon to backend
           $.post('/', {
               lan : Math.round(locations[0].Location.DisplayPosition.Latitude),
               lon : Math.round(locations[0].Location.DisplayPosition.Longitude)
             }, function(data) {
-              console.log(data);
+              //display info data as info bubble
               var content = locations[0].Location.Address.Label + ".<br>" 
                             + data.weather[0].main + ".<br>"
                             + "<b>current temp:</b> " + data.main.temp + ".<br>"
@@ -128,6 +133,7 @@
             },
             "json"
           );
+            //center the map at the city location
           map.setCenter({
             lat:locations[0].Location.DisplayPosition.Latitude, 
             lng:locations[0].Location.DisplayPosition.Longitude
@@ -149,7 +155,7 @@
  
         var behavior = new H.mapevents.Behavior(mapEvents);
 </script>
-<!--TODO - TBD-->
+<!--Bootstrap related to java script-->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
 integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
