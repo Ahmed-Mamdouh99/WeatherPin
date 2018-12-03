@@ -76,6 +76,10 @@
                         + "<b>current temp:</b> " + data.main.temp + ".<br>"
                         + "<b> max temp:</b> " + data.main.temp_max + ".<br>"
                         + "<b> min temp:</b> " + data.main.temp_min + ".<br>";
+
+                //remove infobubbles
+                ui.getBubbles().forEach(bub => ui.removeBubble(bub));
+
                 // Create an InfoBubble at the returned location with
                 // the address as its contents:
                 ui.addBubble(new H.ui.InfoBubble({
@@ -131,6 +135,9 @@
           map.setZoom(10);
           
         };
+
+        //remove infobubbles
+        ui.getBubbles().forEach(bub => ui.removeBubble(bub));
 
         // Call the geocode method with the geocoding parameters,
         // the callback and an error callback function (called if a
